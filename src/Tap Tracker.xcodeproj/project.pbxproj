@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		D97EB3D21D0C3E9F000EE2B7 /* AllTapTracker.mustache in Resources */ = {isa = PBXBuildFile; fileRef = D97EB3D11D0C3E9F000EE2B7 /* AllTapTracker.mustache */; };
 		D97EB3D31D0C3EB4000EE2B7 /* AllTapTracker.mustache in CopyFiles */ = {isa = PBXBuildFile; fileRef = D97EB3D11D0C3E9F000EE2B7 /* AllTapTracker.mustache */; };
+		D97EB3D51D0C49F2000EE2B7 /* Count.mustache in Resources */ = {isa = PBXBuildFile; fileRef = D97EB3D41D0C49F2000EE2B7 /* Count.mustache */; };
+		D97EB3D61D0C4A01000EE2B7 /* TapTracker.mustache in Resources */ = {isa = PBXBuildFile; fileRef = F85FB11B1BDFCD5E00DABFA8 /* TapTracker.mustache */; };
 		F84242451BD973C1001EFF66 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F84242441BD973C1001EFF66 /* AppDelegate.swift */; };
 		F84242471BD973C1001EFF66 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F84242461BD973C1001EFF66 /* ViewController.swift */; };
 		F842424A1BD973C1001EFF66 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F84242481BD973C1001EFF66 /* Main.storyboard */; };
@@ -41,6 +43,7 @@
 
 /* Begin PBXFileReference section */
 		D97EB3D11D0C3E9F000EE2B7 /* AllTapTracker.mustache */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = AllTapTracker.mustache; sourceTree = SOURCE_ROOT; };
+		D97EB3D41D0C49F2000EE2B7 /* Count.mustache */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Count.mustache; sourceTree = SOURCE_ROOT; };
 		F84242411BD973C1001EFF66 /* Tap Tracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Tap Tracker.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F84242441BD973C1001EFF66 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F84242461BD973C1001EFF66 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -119,6 +122,7 @@
 				F8E752D91BDA6B5400BFC36A /* TTHandlers.swift */,
 				F85FB11B1BDFCD5E00DABFA8 /* TapTracker.mustache */,
 				D97EB3D11D0C3E9F000EE2B7 /* AllTapTracker.mustache */,
+				D97EB3D41D0C49F2000EE2B7 /* Count.mustache */,
 				F842425B1BD97409001EFF66 /* Tap Tracker Server.h */,
 				F842425D1BD97409001EFF66 /* Info.plist */,
 				F878F8551BE3F43A008B4F35 /* index.html */,
@@ -242,7 +246,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D97EB3D61D0C4A01000EE2B7 /* TapTracker.mustache in Resources */,
 				D97EB3D21D0C3E9F000EE2B7 /* AllTapTracker.mustache in Resources */,
+				D97EB3D51D0C49F2000EE2B7 /* Count.mustache in Resources */,
 				F878F8561BE3F440008B4F35 /* index.html in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

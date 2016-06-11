@@ -48,6 +48,16 @@ public func PerfectServerModuleInit() {
         
         return TTHandlerTwo()
     }
+    
+    PageHandlerRegistry.addPageHandler("TTHandlerThree") {
+        // This closure is called in order to create the handler object.
+        // It is called once for each relevant request.
+        // The supplied WebResponse object can be used to tailor the return value.
+        // However, all request processing should take place in the `valuesForResponse` function.
+        (r:WebResponse) -> PageHandler in
+        
+        return TTHandlerThree()
+    }
 
 	// Create our SQLite tracking database.
 	do {
@@ -61,6 +71,44 @@ public func PerfectServerModuleInit() {
 // Handler class
 // When referenced in a mustache template, this class will be instantiated to handle the request
 // and provide a set of values which will be used to complete the template.
+
+class TTHandlerThree: PageHandler {
+    func valuesForResponse(context: MustacheEvaluationContext, collector: MustacheEvaluationOutputCollector) throws -> MustacheEvaluationContext.MapType {
+        
+        // The dictionary which we will return
+        var values = MustacheEvaluationContext.MapType()
+        
+        print("TTHandlerThree got request")
+        
+        // Grab the WebRequest
+        if let request = context.webRequest {
+            
+            // Try to get the last tap instance from the database
+            let sqlite = try SQLite(TTHandler.trackerDbPath)
+            defer {
+                sqlite.close()
+            }
+            
+            var temp = 0
+            
+            try sqlite.forEachRow("SELECT * FROM taps") {
+                (stmt:SQLiteStmt, i:Int) -> () in
+                
+                values
+                
+                do {
+                    let timeStr = try ICU.formatDate(time, format: "yyyy-MM-d hh:mm aaa")
+                    
+                    let resultSets: [[String:Any]] = [["time": timeStr, "lat":lat, "long":long, "last":false]]
+                    temp =+ 1
+                } catch { }
+            }
+        }
+        
+        return values["count"] = temp
+    }
+}
+
 class TTHandlerTwo: PageHandler {
     func valuesForResponse(context: MustacheEvaluationContext, collector: MustacheEvaluationOutputCollector) throws -> MustacheEvaluationContext.MapType {
         
