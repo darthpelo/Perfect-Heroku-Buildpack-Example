@@ -37,6 +37,17 @@ public func PerfectServerModuleInit() {
 
 		return TTHandler()
 	}
+    
+    PageHandlerRegistry.addPageHandler("TTHandlerTwo") {
+        
+        // This closure is called in order to create the handler object.
+        // It is called once for each relevant request.
+        // The supplied WebResponse object can be used to tailor the return value.
+        // However, all request processing should take place in the `valuesForResponse` function.
+        (r:WebResponse) -> PageHandler in
+        
+        return TTHandlerTwo()
+    }
 
 	// Create our SQLite tracking database.
 	do {
