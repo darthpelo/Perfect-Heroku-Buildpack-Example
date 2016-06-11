@@ -90,7 +90,7 @@ class TTHandlerTwo: PageHandler {
                 do {
                     let timeStr = try ICU.formatDate(time, format: "yyyy-MM-d hh:mm aaa")
                     
-                    let resultSets: [[String:Any]] = [["time": timeStr, "lat":lat, "long":long]]
+                    let resultSets: [[String:Any]] = [["time": timeStr, "lat":lat, "long":long, "last":false]]
                     values["allResult"] = resultSets
                 } catch { }
             }

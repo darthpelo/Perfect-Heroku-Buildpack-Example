@@ -3,4 +3,4 @@
 This is the mustache template file for the tap tracker example.
 
 }}
-{"allResult":[{{#allResult}}{"time":"{{time}}","lat":{{lat}},"long":{{long}} }{{/allResult}}]}
+{"allResult":[{{#allResult}}{"time":"{{time}}","lat":{{lat}},"long":{{long}} }{{^last}},{{/last}}{{/allResult}}]}
