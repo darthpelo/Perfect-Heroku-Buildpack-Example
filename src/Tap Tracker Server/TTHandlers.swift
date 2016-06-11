@@ -108,6 +108,7 @@ class TTHandlerTwo: PageHandler {
         
         // The dictionary which we will return
         var values = MustacheEvaluationContext.MapType()
+        var resultSets: [[String:Any]] = []
         
         print("TTHandlerTwo got request")
         
@@ -120,7 +121,7 @@ class TTHandlerTwo: PageHandler {
                 sqlite.close()
             }
             
-            var resultSets: [[String:Any]] = []
+            
             
             try sqlite.forEachRow("SELECT * FROM taps") {
                 (stmt:SQLiteStmt, i:Int) -> () in
