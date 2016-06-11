@@ -50,6 +50,18 @@ public func PerfectServerModuleInit() {
 // Handler class
 // When referenced in a mustache template, this class will be instantiated to handle the request
 // and provide a set of values which will be used to complete the template.
+class TTHandlerTwo: PageHandler {
+    func valuesForResponse(context: MustacheEvaluationContext, collector: MustacheEvaluationOutputCollector) throws -> MustacheEvaluationContext.MapType {
+        
+        // The dictionary which we will return
+        var values = MustacheEvaluationContext.MapType()
+        
+        print("TTHandler got request")
+        
+        return values
+    }
+}
+
 class TTHandler: PageHandler { // all template handlers must inherit from PageHandler
 
 	static var trackerDbPath: String {
