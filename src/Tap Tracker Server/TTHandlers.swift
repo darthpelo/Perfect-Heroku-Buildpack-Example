@@ -80,7 +80,7 @@ class TTHandlerTwo: PageHandler {
         if let request = context.webRequest {
             
             // Try to get the last tap instance from the database
-            let sqlite = try SQLite(TTHandlerTwo.trackerDbPath)
+            let sqlite = try SQLite(TTHandler.trackerDbPath)
             defer {
                 sqlite.close()
             }
@@ -137,26 +137,26 @@ class TTHandler: PageHandler { // all template handlers must inherit from PageHa
 
 			// Select most recent
 			// If there are no existing taps, we'll just return the current one
-			let gotTap = false
+			var gotTap = false
 
-//			try sqlite.forEachRow("SELECT time, lat, long FROM taps ORDER BY time DESC LIMIT 1") {
-//				(stmt:SQLiteStmt, i:Int) -> () in
-//
-//				// We got a result row
-//				// Pull out the values and place them in the resulting values dictionary
-//				let time = stmt.columnDouble(0)
-//				let lat = stmt.columnDouble(1)
-//				let long = stmt.columnDouble(2)
-//
-//				do {
-//					let timeStr = try ICU.formatDate(time, format: "yyyy-MM-d hh:mm aaa")
-//
-//					let resultSets: [[String:Any]] = [["time": timeStr, "lat":lat, "long":long, "last":true]]
-//					values["resultSets"] = resultSets
-//				} catch { }
-//
-//				gotTap = true
-//			}
+			try sqlite.forEachRow("SELECT * FROM taps ORDER BY time DESC") {
+				(stmt:SQLiteStmt, i:Int) -> () in
+
+				// We got a result row
+				// Pull out the values and place them in the resulting values dictionary
+				let time = stmt.columnDouble(0)
+				let lat = stmt.columnDouble(1)
+				let long = stmt.columnDouble(2)
+
+				do {
+					let timeStr = try ICU.formatDate(time, format: "yyyy-MM-d hh:mm aaa")
+
+					let resultSets: [[String:Any]] = [["time": timeStr, "lat":lat, "long":long, "last":true]]
+					values["resultSets"] = resultSets
+				} catch { }
+
+				gotTap = true
+			}
 
 			// If the user is posting a new tap for tracking purposes...
 			if request.requestMethod() == "POST" {

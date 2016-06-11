@@ -19,7 +19,6 @@
 		F84242661BD97839001EFF66 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F84242651BD97839001EFF66 /* MapKit.framework */; };
 		F85FB11D1BDFCDE200DABFA8 /* TapTracker.mustache in CopyFiles */ = {isa = PBXBuildFile; fileRef = F85FB11B1BDFCD5E00DABFA8 /* TapTracker.mustache */; };
 		F85FB1201BDFF93200DABFA8 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F85FB11F1BDFF93200DABFA8 /* MapViewController.swift */; };
-		F85FB12C1BE01B7200DABFA8 /* PerfectLib.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F84242611BD97455001EFF66 /* PerfectLib.framework */; };
 		F878F8561BE3F440008B4F35 /* index.html in Resources */ = {isa = PBXBuildFile; fileRef = F878F8551BE3F43A008B4F35 /* index.html */; };
 		F878F8571BE3F451008B4F35 /* index.html in CopyFiles */ = {isa = PBXBuildFile; fileRef = F878F8551BE3F43A008B4F35 /* index.html */; };
 		F8E752DA1BDA6B5400BFC36A /* TTHandlers.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8E752D91BDA6B5400BFC36A /* TTHandlers.swift */; };
@@ -67,7 +66,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				F84242661BD97839001EFF66 /* MapKit.framework in Frameworks */,
-				F85FB12C1BE01B7200DABFA8 /* PerfectLib.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -195,7 +193,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0710;
-				LastUpgradeCheck = 0710;
+				LastUpgradeCheck = 0730;
 				TargetAttributes = {
 					F84242401BD973C1001EFF66 = {
 						CreatedOnToolsVersion = 7.1;
@@ -295,6 +293,8 @@
 		F842423B1BD9735E001EFF66 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ENABLE_TESTABILITY = YES;
+				ONLY_ACTIVE_ARCH = YES;
 			};
 			name = Debug;
 		};
