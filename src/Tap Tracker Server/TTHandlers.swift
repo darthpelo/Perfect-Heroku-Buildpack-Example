@@ -80,6 +80,8 @@ class TTHandlerThree: PageHandler {
         
         print("TTHandlerThree got request")
         
+        var temp = 0
+        
         // Grab the WebRequest
         if let request = context.webRequest {
             
@@ -88,8 +90,6 @@ class TTHandlerThree: PageHandler {
             defer {
                 sqlite.close()
             }
-            
-            var temp = 0
             
             try sqlite.forEachRow("SELECT * FROM taps") {
                 (stmt:SQLiteStmt, i:Int) -> () in
