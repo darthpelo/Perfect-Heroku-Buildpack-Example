@@ -97,8 +97,8 @@ class TTHandlerThree: PageHandler {
                 temp += 1
             }
         }
-        
-        return values["count"] = temp
+        values["count"] = temp
+        return values
     }
 }
 
