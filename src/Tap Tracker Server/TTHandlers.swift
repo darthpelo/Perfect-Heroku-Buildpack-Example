@@ -62,13 +62,14 @@ public func PerfectServerModuleInit() {
 // When referenced in a mustache template, this class will be instantiated to handle the request
 // and provide a set of values which will be used to complete the template.
 class TTHandlerTwo: PageHandler {
+    
+    static var trackerDbPath: String {
+        // Full path to the SQLite database in which we store our tracking data.
+        let dbPath = PerfectServer.staticPerfectServer.homeDir() + serverSQLiteDBs + "TapTrackerDb"
+        return dbPath
+    }
+    
     func valuesForResponse(context: MustacheEvaluationContext, collector: MustacheEvaluationOutputCollector) throws -> MustacheEvaluationContext.MapType {
-        
-        static var trackerDbPath: String {
-            // Full path to the SQLite database in which we store our tracking data.
-            let dbPath = PerfectServer.staticPerfectServer.homeDir() + serverSQLiteDBs + "TapTrackerDb"
-            return dbPath
-        }
         
         // The dictionary which we will return
         var values = MustacheEvaluationContext.MapType()
