@@ -141,9 +141,8 @@ class TTHandlerTwo: PageHandler {
             }
         }
         //resultSets.append(["time": "", "lat":0, "long":0, "last":true])
-        if let lastRow = resultSets.last {
-            lastRow["last"] = true
-        }
+        var lastRow = resultSets.last!
+        lastRow["last"] = true
         values["allResult"] = resultSets
         return values
     }
