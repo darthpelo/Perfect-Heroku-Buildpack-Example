@@ -64,7 +64,7 @@ public func PerfectServerModuleInit() {
 class TTHandlerTwo: PageHandler {
     func valuesForResponse(context: MustacheEvaluationContext, collector: MustacheEvaluationOutputCollector) throws -> MustacheEvaluationContext.MapType {
         
-        let trackerDbPath: String {
+        static var trackerDbPath: String {
             // Full path to the SQLite database in which we store our tracking data.
             let dbPath = PerfectServer.staticPerfectServer.homeDir() + serverSQLiteDBs + "TapTrackerDb"
             return dbPath
@@ -79,7 +79,7 @@ class TTHandlerTwo: PageHandler {
         if let request = context.webRequest {
             
             // Try to get the last tap instance from the database
-            let sqlite = try SQLite(TTHandler.trackerDbPath)
+            let sqlite = try SQLite(TTHandlerTwo.trackerDbPath)
             defer {
                 sqlite.close()
             }
