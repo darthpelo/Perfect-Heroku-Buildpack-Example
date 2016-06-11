@@ -94,14 +94,7 @@ class TTHandlerThree: PageHandler {
             try sqlite.forEachRow("SELECT * FROM taps") {
                 (stmt:SQLiteStmt, i:Int) -> () in
                 
-                values
-                
-                do {
-                    let timeStr = try ICU.formatDate(time, format: "yyyy-MM-d hh:mm aaa")
-                    
-                    let resultSets: [[String:Any]] = [["time": timeStr, "lat":lat, "long":long, "last":false]]
-                    temp =+ 1
-                } catch { }
+                temp += 1
             }
         }
         
