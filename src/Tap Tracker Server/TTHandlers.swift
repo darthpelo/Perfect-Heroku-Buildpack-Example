@@ -97,7 +97,8 @@ class TTHandlerThree: PageHandler {
                 temp += 1
             }
         }
-        values["count"] = temp
+        values = ["count": temp, "last":false]
+        
         return values
     }
 }
@@ -119,6 +120,8 @@ class TTHandlerTwo: PageHandler {
                 sqlite.close()
             }
             
+            var resultSets: [[String:Any]] = []
+            
             try sqlite.forEachRow("SELECT * FROM taps") {
                 (stmt:SQLiteStmt, i:Int) -> () in
                 
@@ -131,12 +134,13 @@ class TTHandlerTwo: PageHandler {
                 do {
                     let timeStr = try ICU.formatDate(time, format: "yyyy-MM-d hh:mm aaa")
                     
-                    let resultSets: [[String:Any]] = [["time": timeStr, "lat":lat, "long":long, "last":false]]
-                    values["allResult"] = resultSets
+                    resultSets.append(["time": timeStr, "lat":lat, "long":long, "last":false])
+                    
                 } catch { }
             }
         }
-        
+        resultSets.append([["time": "", "lat":0, "long":0, "last":true]])
+        values["allResult"] = resultSets
         return values
     }
 }
