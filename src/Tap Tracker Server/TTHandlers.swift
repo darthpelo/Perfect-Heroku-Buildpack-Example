@@ -64,10 +64,47 @@ public func PerfectServerModuleInit() {
 class TTHandlerTwo: PageHandler {
     func valuesForResponse(context: MustacheEvaluationContext, collector: MustacheEvaluationOutputCollector) throws -> MustacheEvaluationContext.MapType {
         
+        static var trackerDbPath: String {
+            // Full path to the SQLite database in which we store our tracking data.
+            let dbPath = PerfectServer.staticPerfectServer.homeDir() + serverSQLiteDBs + "TapTrackerDb"
+            return dbPath
+        }
+        
         // The dictionary which we will return
         var values = MustacheEvaluationContext.MapType()
         
-        print("TTHandler got request")
+        print("TTHandlerTwo got request")
+        
+        // Grab the WebRequest
+        if let request = context.webRequest {
+            
+            // Try to get the last tap instance from the database
+            let sqlite = try SQLite(TTHandler.trackerDbPath)
+            defer {
+                sqlite.close()
+            }
+            
+            var gotTap = false
+            
+            try sqlite.forEachRow("SELECT * FROM taps") {
+                (stmt:SQLiteStmt, i:Int) -> () in
+                
+                // We got a result row
+                // Pull out the values and place them in the resulting values dictionary
+                let time = stmt.columnDouble(0)
+                let lat = stmt.columnDouble(1)
+                let long = stmt.columnDouble(2)
+                
+                do {
+                    let timeStr = try ICU.formatDate(time, format: "yyyy-MM-d hh:mm aaa")
+                    
+                    let resultSets: [[String:Any]] = [["time": timeStr, "lat":lat, "long":long, "last":true]]
+                    values["resultSets"] = resultSets
+                } catch { }
+                
+                gotTap = true
+            }
+        }
         
         return values
     }
@@ -103,26 +140,26 @@ class TTHandler: PageHandler { // all template handlers must inherit from PageHa
 
 			// Select most recent
 			// If there are no existing taps, we'll just return the current one
-			var gotTap = false
+			let gotTap = false
 
-			try sqlite.forEachRow("SELECT time, lat, long FROM taps ORDER BY time DESC LIMIT 1") {
-				(stmt:SQLiteStmt, i:Int) -> () in
-
-				// We got a result row
-				// Pull out the values and place them in the resulting values dictionary
-				let time = stmt.columnDouble(0)
-				let lat = stmt.columnDouble(1)
-				let long = stmt.columnDouble(2)
-
-				do {
-					let timeStr = try ICU.formatDate(time, format: "yyyy-MM-d hh:mm aaa")
-
-					let resultSets: [[String:Any]] = [["time": timeStr, "lat":lat, "long":long, "last":true]]
-					values["resultSets"] = resultSets
-				} catch { }
-
-				gotTap = true
-			}
+//			try sqlite.forEachRow("SELECT time, lat, long FROM taps ORDER BY time DESC LIMIT 1") {
+//				(stmt:SQLiteStmt, i:Int) -> () in
+//
+//				// We got a result row
+//				// Pull out the values and place them in the resulting values dictionary
+//				let time = stmt.columnDouble(0)
+//				let lat = stmt.columnDouble(1)
+//				let long = stmt.columnDouble(2)
+//
+//				do {
+//					let timeStr = try ICU.formatDate(time, format: "yyyy-MM-d hh:mm aaa")
+//
+//					let resultSets: [[String:Any]] = [["time": timeStr, "lat":lat, "long":long, "last":true]]
+//					values["resultSets"] = resultSets
+//				} catch { }
+//
+//				gotTap = true
+//			}
 
 			// If the user is posting a new tap for tracking purposes...
 			if request.requestMethod() == "POST" {
