@@ -154,7 +154,7 @@ class TTHandlerThree: PageHandler {
             }
         }
         values = ["count": temp]
-        
+        values = ["time": 1]
         return values
     }
 }
