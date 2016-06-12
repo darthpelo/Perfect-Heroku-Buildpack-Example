@@ -164,7 +164,7 @@ class TTHandlerTwo: PageHandler {
         // The dictionary which we will return
         var values = MustacheEvaluationContext.MapType()
         var resultSets: [[String:Any]] = []
-        
+        var temp = 0
         print("TTHandlerTwo got request")
         
         // Grab the WebRequest
@@ -186,6 +186,7 @@ class TTHandlerTwo: PageHandler {
                 let time = stmt.columnDouble(0)
                 let lat = stmt.columnDouble(1)
                 let long = stmt.columnDouble(2)
+                temp += 1
                 
                 do {
                     let timeStr = try ICU.formatDate(time, format: "yyyy-MM-d hh:mm aaa")
@@ -199,8 +200,7 @@ class TTHandlerTwo: PageHandler {
         var lastRow = resultSets.removeLast()
         lastRow["last"] = true
         resultSets.append(lastRow)
-        values["allResult"] = resultSets
-        
+        values = ["count": temp, "allResult": resultSets]
         return values
     }
 }
