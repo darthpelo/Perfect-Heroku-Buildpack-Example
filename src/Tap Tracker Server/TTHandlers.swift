@@ -97,7 +97,7 @@ class TTHandlerThree: PageHandler {
                 temp += 1
             }
         }
-        values = ["count": temp, "last":false]
+        values = ["count": temp, "last":true]
         
         return values
     }
@@ -145,6 +145,8 @@ class TTHandlerTwo: PageHandler {
         lastRow["last"] = true
         resultSets.append(lastRow)
         values["allResult"] = resultSets
+        
+        values["count"] = ["count":resultSets.count, "last":true]
         
         return values
     }
