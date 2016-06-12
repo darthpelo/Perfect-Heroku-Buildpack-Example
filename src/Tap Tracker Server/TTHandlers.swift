@@ -141,9 +141,11 @@ class TTHandlerTwo: PageHandler {
             }
         }
         //resultSets.append(["time": "", "lat":0, "long":0, "last":true])
-        var lastRow = resultSets.last!
+        var lastRow = resultSets.removeLast()
         lastRow["last"] = true
+        resultSets.append(lastRow)
         values["allResult"] = resultSets
+        
         return values
     }
 }
