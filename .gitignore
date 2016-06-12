@@ -1,0 +1,11 @@
+src/PerfectLib.framework/Modules
+src/PerfectLib.framework/PerfectLib
+src/PerfectLib.framework/Resources
+src/PerfectLib.framework/Versions/Current
+src/PerfectLib.framework/Versions/A/PerfectLib
+src/PerfectLib.framework/Versions/A/Frameworks/libswiftCore.dylib
+src/PerfectLib.framework/Versions/A/Frameworks/libswiftDarwin.dylib
+src/PerfectLib.framework/Versions/A/Modules/module.private.modulemap
+src/PerfectLib.framework/Versions/A/Modules/PerfectLib.swiftmodule/x86_64.swiftdoc
+src/PerfectLib.framework/Versions/A/Modules/PerfectLib.swiftmodule/x86_64.swiftmodule
+src/PerfectLib.framework/Versions/A/Resources/Info.plist
