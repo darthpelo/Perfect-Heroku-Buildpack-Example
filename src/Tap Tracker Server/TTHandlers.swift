@@ -202,8 +202,6 @@ class TTHandlerTwo: PageHandler {
         resultSets.append(lastRow)
         values["allResult"] = resultSets
         
-        values = ["count": 1]
-        
         return values
     }
 }
