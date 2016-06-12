@@ -140,13 +140,14 @@ class TTHandlerTwo: PageHandler {
                 } catch { }
             }
         }
-        //resultSets.append(["time": "", "lat":0, "long":0, "last":true])
+
         var lastRow = resultSets.removeLast()
         lastRow["last"] = true
         resultSets.append(lastRow)
         values["allResult"] = resultSets
         
-        values["count"] = ["count":resultSets.count, "last":true]
+        let countSet: [[String:Any]] = ["count":resultSets.count, "last":true]
+        values["count"] = countSet
         
         return values
     }
