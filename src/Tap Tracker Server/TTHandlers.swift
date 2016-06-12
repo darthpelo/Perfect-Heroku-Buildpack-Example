@@ -202,9 +202,6 @@ class TTHandlerTwo: PageHandler {
         resultSets.append(lastRow)
         values["allResult"] = resultSets
         
-        let countSet: [[String:Any]] = [["count":resultSets.count, "last":true]]
-        values["count"] = countSet
-        
         return values
     }
 }
