@@ -20,6 +20,62 @@
 
 import PerfectLib
 
+class TTHandler: PageHandler { // all template handlers must inherit from PageHandler
+    
+    static var trackerDbPath: String {
+        // Full path to the SQLite database in which we store our tracking data.
+        let dbPath = PerfectServer.staticPerfectServer.homeDir() + serverSQLiteDBs + "TapTrackerDb"
+        return dbPath
+    }
+    
+    // This is the function which all handlers must impliment.
+    // It is called by the system to allow the handler to return the set of values which will be used when populating the template.
+    // - parameter context: The MustacheEvaluationContext which provides access to the WebRequest containing all the information pertaining to the request
+    // - parameter collector: The MustacheEvaluationOutputCollector which can be used to adjust the template output. For example a `defaultEncodingFunc` could be installed to change how outgoing values are encoded.
+    func valuesForResponse(context: MustacheEvaluationContext, collector: MustacheEvaluationOutputCollector) throws -> MustacheEvaluationContext.MapType {
+        
+        // The dictionary which we will return
+        var values = MustacheEvaluationContext.MapType()
+        
+        print("TTHandler got request")
+        
+        // Grab the WebRequest
+        if let request = context.webRequest {
+            
+            // Try to get the last tap instance from the database
+            let sqlite = try SQLite(TTHandler.trackerDbPath)
+            defer {
+                sqlite.close()
+            }
+            
+            // If the user is posting a new tap for tracking purposes...
+            if request.requestMethod() == "POST" {
+                // Adding a new ta[ instance
+                if let lat = request.param("lat"), let long = request.param("long") {
+                    
+                    let time = ICU.getNow()
+                    
+                    try sqlite.doWithTransaction {
+                        
+                        // Insert the new row
+                        try sqlite.execute("INSERT INTO taps (time,lat,long) VALUES (?,?,?)", doBindings: {
+                            (stmt:SQLiteStmt) -> () in
+                            
+                            try stmt.bind(1, time)
+                            try stmt.bind(2, lat)
+                            try stmt.bind(3, long)
+                        })
+                    }
+                }
+            }
+        }
+        // Return the values
+        // These will be used to populate the template
+        return values
+    }
+    
+}
+
 // This is the function which all Perfect Server modules must expose.
 // The system will load the module and call this function.
 // In here, register any handlers or perform any one-time tasks.
@@ -146,65 +202,11 @@ class TTHandlerTwo: PageHandler {
         resultSets.append(lastRow)
         values["allResult"] = resultSets
         
-        let countSet: [[String:Any]] = ["count":resultSets.count, "last":true]
+        let countSet: [[String:Any]] = [["count":resultSets.count, "last":true]]
         values["count"] = countSet
         
         return values
     }
 }
 
-class TTHandler: PageHandler { // all template handlers must inherit from PageHandler
 
-	static var trackerDbPath: String {
-			// Full path to the SQLite database in which we store our tracking data.
-		let dbPath = PerfectServer.staticPerfectServer.homeDir() + serverSQLiteDBs + "TapTrackerDb"
-		return dbPath
-	}
-
-	// This is the function which all handlers must impliment.
-	// It is called by the system to allow the handler to return the set of values which will be used when populating the template.
-	// - parameter context: The MustacheEvaluationContext which provides access to the WebRequest containing all the information pertaining to the request
-	// - parameter collector: The MustacheEvaluationOutputCollector which can be used to adjust the template output. For example a `defaultEncodingFunc` could be installed to change how outgoing values are encoded.
-	func valuesForResponse(context: MustacheEvaluationContext, collector: MustacheEvaluationOutputCollector) throws -> MustacheEvaluationContext.MapType {
-
-		// The dictionary which we will return
-		var values = MustacheEvaluationContext.MapType()
-
-		print("TTHandler got request")
-
-		// Grab the WebRequest
-		if let request = context.webRequest {
-
-			// Try to get the last tap instance from the database
-			let sqlite = try SQLite(TTHandler.trackerDbPath)
-			defer {
-				sqlite.close()
-            }
-
-			// If the user is posting a new tap for tracking purposes...
-			if request.requestMethod() == "POST" {
-				// Adding a new ta[ instance
-				if let lat = request.param("lat"), let long = request.param("long") {
-
-					let time = ICU.getNow()
-
-					try sqlite.doWithTransaction {
-
-						// Insert the new row
-						try sqlite.execute("INSERT INTO taps (time,lat,long) VALUES (?,?,?)", doBindings: {
-							(stmt:SQLiteStmt) -> () in
-
-							try stmt.bind(1, time)
-							try stmt.bind(2, lat)
-							try stmt.bind(3, long)
-						})
-					}
-				}
-			}
-		}
-		// Return the values
-		// These will be used to populate the template
-		return values
-	}
-
-}
