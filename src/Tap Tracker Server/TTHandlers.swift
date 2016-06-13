@@ -36,7 +36,7 @@ class TTHandler: PageHandler { // all template handlers must inherit from PageHa
         
         // The dictionary which we will return
         var values = MustacheEvaluationContext.MapType()
-        values = ["resultSets": "NOK"]
+        values = ["result": "NOK"]
         
         print("TTHandler got request")
         
@@ -66,7 +66,7 @@ class TTHandler: PageHandler { // all template handlers must inherit from PageHa
                             try stmt.bind(2, lat)
                             try stmt.bind(3, long)
                             
-                            values = ["resultSets": "OK"]
+                            values = ["result": "OK"]
                         })
                     }
                 }
