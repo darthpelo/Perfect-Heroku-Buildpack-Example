@@ -183,7 +183,7 @@ class TTHandlerTwo: PageHandler {
                 
                 // We got a result row
                 // Pull out the values and place them in the resulting values dictionary
-                let time = stmt.columnDouble(0)
+                let time = ICU.getNow()
                 let lat = stmt.columnDouble(1)
                 let long = stmt.columnDouble(2)
                 temp += 1
