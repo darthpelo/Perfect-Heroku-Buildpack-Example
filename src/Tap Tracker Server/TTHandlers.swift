@@ -201,7 +201,7 @@ class TTHandlerTwo: PageHandler {
         lastRow["last"] = true
         resultSets.append(lastRow)
         
-        values = ["allResult": resultSets, "count": temp, "time": 1]
+        values = ["allResult": resultSets]
         
         return values
     }
