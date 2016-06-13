@@ -20,6 +20,57 @@
 
 import PerfectLib
 
+// This is the function which all Perfect Server modules must expose.
+// The system will load the module and call this function.
+// In here, register any handlers or perform any one-time tasks.
+public func PerfectServerModuleInit() {
+
+	// Register our handler class with the PageHandlerRegistry.
+	// The name "TTHandler", which we supply here, is used within a mustache template to associate the template with the handler.
+	PageHandlerRegistry.addPageHandler("TTHandler") {
+
+		// This closure is called in order to create the handler object.
+		// It is called once for each relevant request.
+		// The supplied WebResponse object can be used to tailor the return value.
+		// However, all request processing should take place in the `valuesForResponse` function.
+		(r:WebResponse) -> PageHandler in
+
+		return TTHandler()
+	}
+    
+    PageHandlerRegistry.addPageHandler("TTHandlerTwo") {
+        
+        // This closure is called in order to create the handler object.
+        // It is called once for each relevant request.
+        // The supplied WebResponse object can be used to tailor the return value.
+        // However, all request processing should take place in the `valuesForResponse` function.
+        (r:WebResponse) -> PageHandler in
+        
+        return TTHandlerTwo()
+    }
+    
+    PageHandlerRegistry.addPageHandler("TTHandlerThree") {
+        // This closure is called in order to create the handler object.
+        // It is called once for each relevant request.
+        // The supplied WebResponse object can be used to tailor the return value.
+        // However, all request processing should take place in the `valuesForResponse` function.
+        (r:WebResponse) -> PageHandler in
+        
+        return TTHandlerThree()
+    }
+
+	// Create our SQLite tracking database.
+	do {
+		let sqlite = try SQLite(TTHandler.trackerDbPath)
+//		try sqlite.execute("CREATE TABLE IF NOT EXISTS taps (id INTEGER PRIMARY KEY, time REAL, lat REAL, long REAL)")
+	} catch {
+		print("Failure creating tracker database at " + TTHandler.trackerDbPath)
+	}
+}
+
+// Handler class
+// When referenced in a mustache template, this class will be instantiated to handle the request
+// and provide a set of values which will be used to complete the template.
 class TTHandler: PageHandler { // all template handlers must inherit from PageHandler
     
     static var trackerDbPath: String {
@@ -76,60 +127,7 @@ class TTHandler: PageHandler { // all template handlers must inherit from PageHa
         // These will be used to populate the template
         return values
     }
-    
 }
-
-// This is the function which all Perfect Server modules must expose.
-// The system will load the module and call this function.
-// In here, register any handlers or perform any one-time tasks.
-public func PerfectServerModuleInit() {
-
-	// Register our handler class with the PageHandlerRegistry.
-	// The name "TTHandler", which we supply here, is used within a mustache template to associate the template with the handler.
-	PageHandlerRegistry.addPageHandler("TTHandler") {
-
-		// This closure is called in order to create the handler object.
-		// It is called once for each relevant request.
-		// The supplied WebResponse object can be used to tailor the return value.
-		// However, all request processing should take place in the `valuesForResponse` function.
-		(r:WebResponse) -> PageHandler in
-
-		return TTHandler()
-	}
-    
-    PageHandlerRegistry.addPageHandler("TTHandlerTwo") {
-        
-        // This closure is called in order to create the handler object.
-        // It is called once for each relevant request.
-        // The supplied WebResponse object can be used to tailor the return value.
-        // However, all request processing should take place in the `valuesForResponse` function.
-        (r:WebResponse) -> PageHandler in
-        
-        return TTHandlerTwo()
-    }
-    
-    PageHandlerRegistry.addPageHandler("TTHandlerThree") {
-        // This closure is called in order to create the handler object.
-        // It is called once for each relevant request.
-        // The supplied WebResponse object can be used to tailor the return value.
-        // However, all request processing should take place in the `valuesForResponse` function.
-        (r:WebResponse) -> PageHandler in
-        
-        return TTHandlerThree()
-    }
-
-	// Create our SQLite tracking database.
-	do {
-		let sqlite = try SQLite(TTHandler.trackerDbPath)
-		try sqlite.execute("CREATE TABLE IF NOT EXISTS taps (id INTEGER PRIMARY KEY, time REAL, lat REAL, long REAL)")
-	} catch {
-		print("Failure creating tracker database at " + TTHandler.trackerDbPath)
-	}
-}
-
-// Handler class
-// When referenced in a mustache template, this class will be instantiated to handle the request
-// and provide a set of values which will be used to complete the template.
 
 class TTHandlerThree: PageHandler {
     func valuesForResponse(context: MustacheEvaluationContext, collector: MustacheEvaluationOutputCollector) throws -> MustacheEvaluationContext.MapType {
