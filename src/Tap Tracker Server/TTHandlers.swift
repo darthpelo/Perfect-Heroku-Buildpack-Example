@@ -200,7 +200,9 @@ class TTHandlerTwo: PageHandler {
         var lastRow = resultSets.removeLast()
         lastRow["last"] = true
         resultSets.append(lastRow)
-        values = ["count": temp, "allResult": resultSets]
+        
+        values = ["allResult": resultSets, "count": temp, "time": 1]
+        
         return values
     }
 }
