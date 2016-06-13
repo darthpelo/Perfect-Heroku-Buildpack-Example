@@ -89,20 +89,10 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
                     
                     do {
                         let json = try NSJSONSerialization.JSONObjectWithData(data, options: .MutableContainers)
-                        print("\(#function) : \(#line) : RESPONSE JSON : \(json)")
-                        if let jsonArray = json["resultSets"] as? [AnyObject] {
-                            if let result = jsonArray.first {
-                                if let timeString = result["time"] as? String,
-                                    lat = result["lat"] as? Double,
-                                    long = result["long"] as? Double {
-                                    self.timeStr = timeString
-                                    self.lat = lat
-                                    self.long = long
-                                    dispatch_async(dispatch_get_main_queue(), {
-                                        self.performSegueWithIdentifier("showMap", sender: self)
-                                    })
-                                }
-                            }
+                        if let result = json["resultSets"] as? String where result == "OK" {
+                            print("\(#function) : \(#line) : RESPONSE JSON : \(json)")
+                        } else {
+                            print("\(#function) : \(#line) : Problem with the POST")
                         }
                     } catch {
                         print("\(#function) : \(#line) : ERROR: \(error)")

@@ -156,7 +156,11 @@ class TTHandlerThree: PageHandler {
                 temp += 1
             }
         }
-        values = ["count": temp, "time": 1]
+        
+        let timeStr = try ICU.formatDate(ICU.getNow(), format: "d-MM-yyyy hh:mm")
+        
+        values = ["count": temp, "time": timeStr]
+        
         return values
     }
 }
@@ -167,7 +171,7 @@ class TTHandlerTwo: PageHandler {
         // The dictionary which we will return
         var values = MustacheEvaluationContext.MapType()
         var resultSets: [[String:Any]] = []
-        var temp = 0
+        
         print("TTHandlerTwo got request")
         
         // Grab the WebRequest
@@ -178,21 +182,18 @@ class TTHandlerTwo: PageHandler {
             defer {
                 sqlite.close()
             }
-            
-            
-            
+
             try sqlite.forEachRow("SELECT * FROM taps") {
                 (stmt:SQLiteStmt, i:Int) -> () in
                 
                 // We got a result row
                 // Pull out the values and place them in the resulting values dictionary
-                let time = ICU.getNow()
+                let time = stmt.columnDouble(0)
                 let lat = stmt.columnDouble(1)
                 let long = stmt.columnDouble(2)
-                temp += 1
                 
                 do {
-                    let timeStr = try ICU.formatDate(time, format: "yyyy-MM-d hh:mm aaa")
+                    let timeStr = try ICU.formatDate(time, format: "d-MM-yyyy hh:mm")
                     
                     resultSets.append(["time": timeStr, "lat":lat, "long":long, "last":false])
                     
