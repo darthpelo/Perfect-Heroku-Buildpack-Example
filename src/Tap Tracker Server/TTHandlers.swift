@@ -192,7 +192,7 @@ class TTHandlerTwo: PageHandler {
                 let time = stmt.columnDouble(0)
                 let lat = stmt.columnDouble(1)
                 let long = stmt.columnDouble(2)
-                let image = stmt.columnText(3)
+                let image = stmt.columnBlob(3)
                 
                 do {
                     let timeStr = try ICU.formatDate(time, format: "d-MM-yyyy hh:mm")
