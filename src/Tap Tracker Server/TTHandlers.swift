@@ -62,7 +62,7 @@ public func PerfectServerModuleInit() {
 	// Create our SQLite tracking database.
 	do {
 		let sqlite = try SQLite(TTHandler.trackerDbPath)
-//		try sqlite.execute("CREATE TABLE IF NOT EXISTS taps (id INTEGER PRIMARY KEY, time REAL, lat REAL, long REAL)")
+		try sqlite.execute("CREATE TABLE IF NOT EXISTS taps (id INTEGER PRIMARY KEY, time REAL, lat REAL, long REAL)")
 	} catch {
 		print("Failure creating tracker database at " + TTHandler.trackerDbPath)
 	}
