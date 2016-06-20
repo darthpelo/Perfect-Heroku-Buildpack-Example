@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D90020541D1886E000F985D8 /* DSC06254.JPG in Resources */ = {isa = PBXBuildFile; fileRef = D90020531D1886E000F985D8 /* DSC06254.JPG */; };
 		D97EB3D21D0C3E9F000EE2B7 /* AllTapTracker.mustache in Resources */ = {isa = PBXBuildFile; fileRef = D97EB3D11D0C3E9F000EE2B7 /* AllTapTracker.mustache */; };
 		D97EB3D31D0C3EB4000EE2B7 /* AllTapTracker.mustache in CopyFiles */ = {isa = PBXBuildFile; fileRef = D97EB3D11D0C3E9F000EE2B7 /* AllTapTracker.mustache */; };
 		D97EB3D51D0C49F2000EE2B7 /* Count.mustache in Resources */ = {isa = PBXBuildFile; fileRef = D97EB3D41D0C49F2000EE2B7 /* Count.mustache */; };
@@ -43,6 +44,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		D90020531D1886E000F985D8 /* DSC06254.JPG */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = DSC06254.JPG; sourceTree = "<group>"; };
 		D97EB3D11D0C3E9F000EE2B7 /* AllTapTracker.mustache */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = AllTapTracker.mustache; sourceTree = SOURCE_ROOT; };
 		D97EB3D41D0C49F2000EE2B7 /* Count.mustache */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Count.mustache; sourceTree = SOURCE_ROOT; };
 		D97EB3D81D0D9E58000EE2B7 /* PerfectLib.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = PerfectLib.framework; sourceTree = "<group>"; };
@@ -103,6 +105,7 @@
 		F84242431BD973C1001EFF66 /* Tap Tracker */ = {
 			isa = PBXGroup;
 			children = (
+				D90020531D1886E000F985D8 /* DSC06254.JPG */,
 				F84242441BD973C1001EFF66 /* AppDelegate.swift */,
 				F84242461BD973C1001EFF66 /* ViewController.swift */,
 				F85FB11F1BDFF93200DABFA8 /* MapViewController.swift */,
@@ -234,6 +237,7 @@
 			files = (
 				F842424F1BD973C1001EFF66 /* LaunchScreen.storyboard in Resources */,
 				F842424C1BD973C1001EFF66 /* Assets.xcassets in Resources */,
+				D90020541D1886E000F985D8 /* DSC06254.JPG in Resources */,
 				F842424A1BD973C1001EFF66 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -72,7 +72,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
             let lat = loc.coordinate.latitude
             let long = loc.coordinate.longitude
             
-            let postBody = "lat=\(lat)&long=\(long)"
+            let imageData = UIImageJPEGRepresentation(UIImage(named: "DSC06254.JPG")!, 1)
+            let postBody = "lat=\(lat)&long=\(long)&image=\(imageData)"
             
             let req = NSMutableURLRequest(URL: NSURL(string: POST_END_POINT)!)
             req.HTTPMethod = "POST"

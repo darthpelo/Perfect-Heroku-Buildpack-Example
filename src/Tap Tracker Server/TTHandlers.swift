@@ -62,7 +62,7 @@ public func PerfectServerModuleInit() {
 	// Create our SQLite tracking database.
 	do {
 		let sqlite = try SQLite(TTHandler.trackerDbPath)
-		try sqlite.execute("CREATE TABLE IF NOT EXISTS taps (id INTEGER PRIMARY KEY, time REAL, lat REAL, long REAL)")
+		try sqlite.execute("CREATE TABLE IF NOT EXISTS taps (id INTEGER PRIMARY KEY, time REAL, lat REAL, long REAL, image BLOB)")
 	} catch {
 		print("Failure creating tracker database at " + TTHandler.trackerDbPath)
 	}
@@ -103,19 +103,22 @@ class TTHandler: PageHandler { // all template handlers must inherit from PageHa
             // If the user is posting a new tap for tracking purposes...
             if request.requestMethod() == "POST" {
                 // Adding a new ta[ instance
-                if let lat = request.param("lat"), let long = request.param("long") {
+                if let lat = request.param("lat"),
+                    let long = request.param("long"),
+                    let image = request.param("image") {
                     
                     let time = ICU.getNow()
                     
                     try sqlite.doWithTransaction {
                         
                         // Insert the new row
-                        try sqlite.execute("INSERT INTO taps (time,lat,long) VALUES (?,?,?)", doBindings: {
+                        try sqlite.execute("INSERT INTO taps (time,lat,long,image) VALUES (?,?,?,?)", doBindings: {
                             (stmt:SQLiteStmt) -> () in
                             
                             try stmt.bind(1, time)
                             try stmt.bind(2, lat)
                             try stmt.bind(3, long)
+                            try stmt.bind(4, image)
                             
                             values = ["result": "OK"]
                         })
@@ -189,11 +192,12 @@ class TTHandlerTwo: PageHandler {
                 let time = stmt.columnDouble(0)
                 let lat = stmt.columnDouble(1)
                 let long = stmt.columnDouble(2)
+                let image = stmt.columnText(3)
                 
                 do {
                     let timeStr = try ICU.formatDate(time, format: "d-MM-yyyy hh:mm")
                     
-                    resultSets.append(["time": timeStr, "lat":lat, "long":long, "last":false])
+                    resultSets.append(["time": timeStr, "lat":lat, "long":long, "image":image, "last":false])
                     
                 } catch { }
             }
